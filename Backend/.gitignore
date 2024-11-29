@@ -1,0 +1,11 @@
+# Ignore .env file in the backend folder
+/backend/.env
+
+# Ignore node_modules folders in both frontend and backend
+/frontend/node_modules
+/backend/node_modules
+
+# Other common ignores (optional)
+.DS_Store
+*.log
+*.env
