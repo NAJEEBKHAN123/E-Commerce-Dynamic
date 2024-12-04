@@ -11,7 +11,7 @@ const register = async (req, res) => {
      const salt = await bcrypt.genSalt(Number(process.env.SALT))
      const hashPassword = await bcrypt.hash(password, salt)
      const newUser = new User({...req.body, password: hashPassword})
-     await newUser.save()
+     await newUser.save() 
      res.status(201).json({message: 'User created successfully', user: newUser})
   } catch (error) {
     console.log('Error in create user', error.message)

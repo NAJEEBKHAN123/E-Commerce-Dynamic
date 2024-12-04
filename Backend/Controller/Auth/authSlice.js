@@ -13,6 +13,9 @@ const generateToken = (user) => {
 const signup = async (req, res) => {
   const { username, email, password, role } = req.body;
   try {
+    if(!username || !email || !password){
+      res.status(400).json({message: 'All field are required'})
+    }
     const existingUser = await User.findOne({ email });
     if (existingUser) return res.status(409).json({ message: 'User already exists' });
 
@@ -34,6 +37,8 @@ const signup = async (req, res) => {
 };
 
 // Login Controller
+// Login Controller
+// Login Controller
 const login = async (req, res) => {
   const { email, password } = req.body;
   try {
@@ -45,10 +50,24 @@ const login = async (req, res) => {
       return res.status(400).json({ message: 'Invalid email or password' });
 
     const token = generateToken(user);
-    res.json({ message: 'Login successful' });
+
+    // Include user object in the response
+    res.json({
+      message: 'Login successful',
+      token: token,
+      role: user.role,  // Include role
+      user: {           // Include the user data
+        id: user._id,
+        username: user.username,
+        email: user.email,
+        role: user.role,
+      },
+    });
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
 };
+
+
 
 module.exports = { signup, login };

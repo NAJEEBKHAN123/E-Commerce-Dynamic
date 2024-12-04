@@ -1,25 +1,46 @@
-import React, { useContext, useState } from 'react';
-import AuthContext from './AuthContext';
+import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { useNavigate, Link } from 'react-router-dom';
+import { loginSuccess } from '../../Redux/Slice/authSlice';
 import axios from 'axios';
-import { Link, useNavigate } from 'react-router-dom';
 
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
-  const { login } = useContext(AuthContext);
+  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const handleLogin = async () => {
     try {
       const res = await axios.post('http://localhost:5000/api/auth/login', { email, password });
-      login(res.data.token);
-      navigate('/dashboard');
+      console.log('API Response:', res.data); // Check the full response for token, role, and user
+  
+      if (!res.data.token || !res.data.role || !res.data.user) throw new Error('Token, role, or user not found');
+  
+      // Dispatch the login action with token, role, and user
+      dispatch(loginSuccess({
+        token: res.data.token,
+        role: res.data.role,
+        user: res.data.user,  // Include user data
+      }));
+  
+      // Redirect based on role
+      if (res.data.role === 'admin') {
+        navigate('/admin-dashboard');
+      } else {
+        navigate('/user-dashboard');
+      }
+  
       alert('Login successful!');
     } catch (err) {
+      console.error('Login error:', err.response?.data || err.message);
       setError(err.response?.data?.message || 'Login failed!');
     }
   };
+  
+  
+  
 
   return (
     <div className="flex justify-center items-center min-h-screen bg-gray-100">

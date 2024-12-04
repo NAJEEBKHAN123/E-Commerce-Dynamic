@@ -1,25 +1,60 @@
-// const jwt = require('jsonwebtoken');
+const jwt = require('jsonwebtoken');
+const User = require('../models/userMode.js')
 
-// // Verify Token Middleware
-// const verifyToken = (req, res, next) => {
-//   const token = req.headers.authorization?.split(' ')[1]; // Extract token from header
-//   if (!token) return res.status(401).json({ message: 'No token provided' });
 
-//   try {
-//     const decoded = jwt.verify(token, process.env.JWT_SECRET); // Verify token
-//     req.user = decoded; // Add decoded user info to request
-//     next();
-//   } catch (err) {
-//     res.status(403).json({ message: 'Invalid or expired token' });
-//   }
-// };
+// Verify User Middleware
+ const verifyUser = async (req, res, next) => {
+  try {
+    if (!req.headers.authorization) {
+      return res.json({
+        success: false,
+        message: 'No token provided',
+      });
+    }
+    
+    const getToken = req.headers.authorization.split(' ')[1];
+    const verifyUser = await jwt.verify(getToken, process.env.JWT_SECRET);
+    
+    req.userId = verifyUser.userId;
+    next();
+  } catch (error) {
+    return res.json({
+      success: false,
+      message: error.message,
+    });
+  }
+};
 
-// // Authorize Role Middleware
-// const authorizeRole = (role) => (req, res, next) => {
-//   if (req.user.role !== role) {
-//     return res.status(403).json({ message: 'Access denied. Admins only.' });
-//   }
-//   next();
-// };
+// Verify Admin Middleware
+ const verifyAdmin = async (req, res, next) => {
+  try {
+    const userId = req.userId;  // Getting userId from req.userId set by verifyUser
+    const userExists = await User.findById(userId);  // Find user in DB
 
-// module.exports = { verifyToken, authorizeRole };
+    if (!userExists) {
+      return res.json({
+        success: false,
+        message: 'User not found',
+      });
+    }
+
+    // Check if the user has admin privileges
+    if (userExists.role !== 'admin') {
+      return res.json({
+        success: false,
+        message: 'Unauthorized access, admin role required',
+      });
+    }
+
+    next(); 
+  } catch (error) {
+    return res.json({
+      success: false,
+      message: error.message,
+    });
+  }
+};
+
+// Authorize Role Middleware
+
+module.exports = { verifyAdmin, verifyUser };
