@@ -1,5 +1,6 @@
 import { useSelector } from 'react-redux';
 import { Navigate } from 'react-router-dom';
+import ProductForm from '../Products/ProductForm';
 
 const AdminDashboard = () => {
   const { isAuthenticated, role, user } = useSelector((state) => state.auth);
@@ -12,6 +13,7 @@ const AdminDashboard = () => {
      <>
      <div>Welcome to Admin Dashboard</div>;
      <h1>{user.name}</h1>
+      <ProductForm/>
      </>
   
   )

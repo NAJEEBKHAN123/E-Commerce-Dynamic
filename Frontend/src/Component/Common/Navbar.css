@@ -1,0 +1,78 @@
+.navbar {
+    background-color: #1a1a1a;
+    color: white;
+    padding: 0.5rem 1rem;
+  }
+  
+  .navbar-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: auto;
+  }
+  
+  .navbar-logo a {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #ff6347;
+    text-decoration: none;
+  }
+  
+  .navbar-links {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+  }
+  
+  .navbar-links a,
+  .navbar-links .btn {
+    color: white;
+    text-decoration: none;
+    font-size: 1rem;
+    padding: 0.5rem;
+  }
+  
+  .navbar-links .btn {
+    background-color: #ff6347;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .navbar-links .btn-cart {
+    background-color: #32cd32;
+  }
+  
+  .navbar-toggle {
+    display: none;
+    font-size: 1.5rem;
+    color: white;
+    background: none;
+    border: none;
+    cursor: pointer;
+  }
+  
+  .navbar-links.active {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  
+  @media screen and (max-width: 768px) {
+    .navbar-links {
+      display: none;
+      flex-direction: column;
+      background-color: #1a1a1a;
+      position: absolute;
+      top: 60px;
+      right: 10px;
+      padding: 1rem;
+      border-radius: 5px;
+    }
+  
+    .navbar-toggle {
+      display: block;
+    }
+  }
+  

@@ -10,7 +10,7 @@ const User = require('../models/userMode.js')
         success: false,
         message: 'No token provided',
       });
-    }
+    } 
     
     const getToken = req.headers.authorization.split(' ')[1];
     const verifyUser = await jwt.verify(getToken, process.env.JWT_SECRET);

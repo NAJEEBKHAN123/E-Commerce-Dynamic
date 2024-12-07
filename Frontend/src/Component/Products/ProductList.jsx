@@ -18,18 +18,22 @@ const ProductList = () => {
   }, []);
 
   return (
-    <div>
+    <div className=''>
       <h1>Product List</h1>
-      <ul>
+      <div className=''>
+      <ul className='flex flex-row flex-wrap gap-4 p-4'>
         {products.map((product) => (
-          <li key={product._id}>
-            <h1 className='text-2xl'>{product.title}</h1>
-            <p>{product.brand}</p>
-            <p>{product.description}</p>
-            <p>{product.price}</p>
+          <li key={product._id} className=''> 
+            <div className=' w-72 min-h-40 rounded-md p-4 bg-gray-200 border border-black'>
+            <h1 className='text-2xl'>Title: {product.title}</h1>
+            <p>Brand: {product.brand}</p>
+            <p>Desciption: {product.description}</p>
+            <p>Price: {product.price}</p>
+            </div>
           </li>
         ))}
       </ul>
+      </div>
     </div>
   );
 };
