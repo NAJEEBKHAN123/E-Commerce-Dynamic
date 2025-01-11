@@ -8,7 +8,6 @@ const generateToken = (user) => {
     expiresIn: '7h',
   });
 };
-
 // Signup Controller
 const signup = async (req, res) => {
   const { username, email, password, role } = req.body;
@@ -37,8 +36,6 @@ const signup = async (req, res) => {
 };
 
 // Login Controller
-// Login Controller
-// Login Controller
 const login = async (req, res) => {
   const { email, password } = req.body;
   try {
@@ -50,7 +47,7 @@ const login = async (req, res) => {
       return res.status(400).json({ message: 'Invalid email or password' });
 
     const token = generateToken(user);
-
+   console.log(token)
     // Include user object in the response
     res.json({
       message: 'Login successful',

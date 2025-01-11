@@ -3,58 +3,49 @@ const User = require('../models/userMode.js')
 
 
 // Verify User Middleware
- const verifyUser = async (req, res, next) => {
+const verifyUser = async (req, res, next) => {
   try {
+    console.log('Authorization Header:', req.headers.authorization);
+
     if (!req.headers.authorization) {
-      return res.json({
-        success: false,
-        message: 'No token provided',
-      });
-    } 
-    
-    const getToken = req.headers.authorization.split(' ')[1];
-    const verifyUser = await jwt.verify(getToken, process.env.JWT_SECRET);
-    
-    req.userId = verifyUser.userId;
+      return res.status(401).json({ success: false, message: 'No token provided' });
+    }
+
+    const token = req.headers.authorization.split(' ')[1];
+    console.log('Extracted Token:', token);
+
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    console.log('Decoded Token:', decoded);
+
+    req.userId = decoded.id;
     next();
   } catch (error) {
-    return res.json({
-      success: false,
-      message: error.message,
-    });
+    console.error('Error in verifyUser:', error.message);
+    return res.status(403).json({ success: false, message: error.message });
   }
 };
 
-// Verify Admin Middleware
- const verifyAdmin = async (req, res, next) => {
+const verifyAdmin = async (req, res, next) => {
   try {
-    const userId = req.userId;  // Getting userId from req.userId set by verifyUser
-    const userExists = await User.findById(userId);  // Find user in DB
+    console.log('User ID in verifyAdmin:', req.userId);
+
+    const userExists = await User.findById(req.userId);
+    console.log('Fetched User:', userExists);
 
     if (!userExists) {
-      return res.json({
-        success: false,
-        message: 'User not found',
-      });
+      return res.status(404).json({ success: false, message: 'User not found' });
     }
 
-    // Check if the user has admin privileges
     if (userExists.role !== 'admin') {
-      return res.json({
-        success: false,
-        message: 'Unauthorized access, admin role required',
-      });
+      return res.status(403).json({ success: false, message: 'Admin access required' });
     }
 
-    next(); 
+    next();
   } catch (error) {
-    return res.json({
-      success: false,
-      message: error.message,
-    });
+    console.error('Error in verifyAdmin:', error.message);
+    return res.status(500).json({ success: false, message: error.message });
   }
 };
 
-// Authorize Role Middleware
 
 module.exports = { verifyAdmin, verifyUser };

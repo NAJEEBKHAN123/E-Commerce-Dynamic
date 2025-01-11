@@ -13,18 +13,26 @@ const Login = () => {
 
   const handleLogin = async () => {
     try {
-      const res = await axios.post('http://localhost:5000/api/auth/login', { email, password });
+      const res = await axios.post(
+        'http://localhost:5000/api/auth/login', 
+        { email, password }
+      );
   
       if (!res.data.token || !res.data.role || !res.data.user) throw new Error('Token, role, or user not found');
   
-      // Dispatch the login action with token, role, and user
+      // Store the token in localStorage
+      localStorage.setItem('token', res.data.token);
+      localStorage.setItem('role', res.data.role);
+      localStorage.setItem('user', JSON.stringify(res.data.user));
+  
+      // Dispatch the loginSuccess action
       dispatch(loginSuccess({
         token: res.data.token,
         role: res.data.role,
-        user: res.data.user,  // Include user data
+        user: res.data.user,
       }));
   
-      // Redirect based on role
+      // Redirect based on the role
       if (res.data.role === 'admin') {
         navigate('/admin-dashboard');
       } else {
@@ -40,7 +48,6 @@ const Login = () => {
   
   
   
-
   return (
     <div className="flex justify-center items-center min-h-screen bg-gray-100">
       <div className="w-full max-w-sm p-6 bg-white rounded-lg shadow-lg">

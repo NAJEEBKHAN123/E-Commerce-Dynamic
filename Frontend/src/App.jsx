@@ -3,8 +3,8 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Navbar from './Component/Common/Navbar';
 import Footer from './Component/Common/Footer';
 import Home from './Pages/Home';
-// import About from './components/Pages/About';
-// import Contact from './components/Pages/Contact';
+import About from './Pages/About';
+import Contact from './Pages/Contact';
 import Login from './Component/Auth/Login';
 import Signup from './Component/Auth/Signup';
 import ProductList from './Component/Products/ProductList';
@@ -23,8 +23,8 @@ const App = () => {
         <Routes>
           {/* Public Routes */}
           <Route path="/" element={<Home />} />
-          {/* <Route path="/about" element={<About />} /> */}
-          {/* <Route path="/contact" element={<Contact />} /> */}
+          <Route path="/about" element={<About />} />
+          <Route path="/contact" element={<Contact />} />
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/add-product" element={<PrivateRoute roles={['admin']}><ProductForm /></PrivateRoute>} />

@@ -2,16 +2,21 @@ const Product = require('../../models/productSchema');
 
 // Create Product
 const createProduct = async (req, res) => {
+    console.log('Request Body:', req.body);
+    console.log('User ID:', req.userId);
+  
     try {
-        const product = new Product(req.body);
-        console.log(req.body);  // Log the incoming data to verify
-        await product.save();
-        res.status(201).json({ message: 'Product created successfully', data: product });
+      const newProduct = new Product({ ...req.body, createdBy: req.userId });
+      await newProduct.save();
+      console.log('Product Created:', newProduct);
+  
+      res.status(201).json({ success: true, product: newProduct });
     } catch (error) {
-        console.error(error); // Log the error to server logs for debugging
-        res.status(500).json({ message: 'Error creating product', error: error.message });
+      console.error('Error in createProduct:', error.message);
+      res.status(500).json({ success: false, message: error.message });
     }
-};
+  };
+  
 
 // Get All Products
 const getAllProduct = async (req, res) => {
