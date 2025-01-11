@@ -15,7 +15,7 @@ function Banner() {
       <div className="text-center text-white relative z-10 px-6">
         <h1 className="text-4xl md:text-6xl font-bold mb-4">Welcome to E-Shop</h1>
         <p className="text-lg md:text-xl mb-6">
-          Discover the best deals and products tailored just for you!
+          Discover the best deals and products tailored just for you!!
         </p>
         <div className="space-x-4">
           <a
