@@ -1,11 +1,33 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 
 function Banner() {
+  const images = [
+    "https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=1920&auto=format&fit=crop&q=80", // Mobile
+    "https://images.unsplash.com/photo-1517336714731-489689fd1ca8?w=1920&auto=format&fit=crop&q=80", // Laptop
+    "https://plus.unsplash.com/premium_photo-1728324783539-50d0b699118d?w=1920&auto=format&fit=crop&q=100", // Brand Watch
+    "https://images.unsplash.com/photo-1524805444758-089113d48a6d?w=1920&auto=format&fit=crop&q=100", // Watch
+  ];
+
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentImageIndex((prevIndex) => {
+        const newIndex = (prevIndex + 1) % images.length;
+        return newIndex;
+      });
+    }, 4000); // Change image every 4 seconds
+
+    return () => clearInterval(interval); // Cleanup on component unmount
+  }, [images.length]);
+
   return (
     <div
       className="bg-cover bg-center h-[500px] flex items-center justify-center relative"
       style={{
-        backgroundImage: "url('https://plus.unsplash.com/premium_photo-1667520427933-899f4c8eb107?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTd8fGUlMjBzaG9wJTIwaG9tZSUyMGltYWdlcyUyMHJlbGF0ZWQlMjB0byUyMHdhdGNoJTIwYW5kJTIwbW9iaWxlJTIwd2l0aCUyMGdpcmx8ZW58MHx8MHx8fDA%3D')",
+        backgroundImage: `url('${images[currentImageIndex]}')`,
+        backgroundSize: "cover",
+        transition: "background-image 1s ease-in-out",
       }}
     >
       {/* Overlay */}
@@ -13,9 +35,9 @@ function Banner() {
 
       {/* Content */}
       <div className="text-center text-white relative z-10 px-6">
-        <h1 className="text-4xl md:text-6xl font-bold mb-4">Welcome to E-Shop</h1>
+        <h1 className="text-4xl md:text-6xl font-bold mb-4">Discover the Latest Tech</h1>
         <p className="text-lg md:text-xl mb-6">
-          Discover the best deals and products tailored just for you!!
+          Explore top deals on mobiles, laptops and watches!
         </p>
         <div className="space-x-4">
           <a

@@ -1,12 +1,16 @@
 import React from 'react';
 // import ProductList from '../Component/Products/ProductList';
 import Banner from '../Component/Common/Banner';
+import Categories from './Categories';
+import Collection from './Collection';
 
 const Home = () => {
   return (
     <div>
       {/* Banner Section */}
       <Banner />
+      <Categories/>
+      <Collection/>
 
       {/* Welcome Section */}
       {/* <section className="text-center py-10">
