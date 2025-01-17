@@ -14,6 +14,8 @@ import AdminDashboard from './Component/Dashboard/AdminDashboard';
 import UserDashboard from './Component/Dashboard/UserDashbard';
 import NotFound from './Pages/NotFound';
 import ProductForm from './Component/Products/ProductForm';
+import ImageDetails from './Pages/ImageDetails';
+import CollectionDetails from './Component/Collection/CollectionDetails';
 
 const App = () => {
   return (
@@ -28,9 +30,12 @@ const App = () => {
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/add-product" element={<PrivateRoute roles={['admin']}><ProductForm /></PrivateRoute>} />
-            <Route path="/edit-product/:id" element={<PrivateRoute roles={['admin']}><ProductForm /></PrivateRoute>} />
+          <Route path="/edit-product/:id" element={<PrivateRoute roles={['admin']}><ProductForm /></PrivateRoute>} />
           <Route path="/products" element={<ProductList />} />
           <Route path="/product/:id" element={<ProductDetails />} />
+          <Route path="/image-details/:imageId" element={<ImageDetails />} />
+          <Route path="/collection/:imageId" element={<CollectionDetails />} />
+
 
           {/* Protected Routes */}
           <Route

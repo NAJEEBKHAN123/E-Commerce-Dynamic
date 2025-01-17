@@ -2,10 +2,10 @@ import React, { useState, useEffect } from 'react';
 
 function Banner() {
   const images = [
-    "https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=1920&auto=format&fit=crop&q=80", // Mobile
+    "https://images.unsplash.com/photo-1707438095902-cc23b01ac7a2?w=1920&auto=format&fit=crop&q=80&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mzl8fHN1bXNpbmclMjBzMjJ8ZW58MHx8MHx8fDA%3D", // Mobile
     "https://images.unsplash.com/photo-1517336714731-489689fd1ca8?w=1920&auto=format&fit=crop&q=80", // Laptop
     "https://plus.unsplash.com/premium_photo-1728324783539-50d0b699118d?w=1920&auto=format&fit=crop&q=100", // Brand Watch
-    "https://images.unsplash.com/photo-1524805444758-089113d48a6d?w=1920&auto=format&fit=crop&q=100", // Watch
+    "https://images.unsplash.com/photo-1543069190-7f59e6bbe223?w=1020&auto=format&fit=crop&q=80", // Watch
   ];
 
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
@@ -23,7 +23,7 @@ function Banner() {
 
   return (
     <div
-      className="bg-cover bg-center h-[500px] flex items-center justify-center relative"
+      className="bg-cover bg-center h-[600px] flex items-center justify-center relative"
       style={{
         backgroundImage: `url('${images[currentImageIndex]}')`,
         backgroundSize: "cover",

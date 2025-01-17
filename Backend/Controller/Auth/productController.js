@@ -2,9 +2,7 @@ const Product = require('../../models/productSchema');
 
 // Create Product
 const createProduct = async (req, res) => {
-    console.log('Request Body:', req.body);
-    console.log('User ID:', req.userId);
-  
+    
     try {
       const newProduct = new Product({ ...req.body, createdBy: req.userId });
       await newProduct.save();

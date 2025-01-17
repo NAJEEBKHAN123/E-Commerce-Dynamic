@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { logout } from '../../Redux/Slice/authSlice';
 import Logo from '../../assets/Logo.webp';
+import './style.css'
 
 const Navbar = () => {
   const { isAuthenticated, role } = useSelector((state) => state.auth);
@@ -18,7 +19,7 @@ const Navbar = () => {
   };
 
   return (
-    <nav className="bg-gray-800 text-white shadow-md sticky top-0 z-50">
+    <nav className="bg-gray-800 text-white shadow-md sticky top-0 z-50 overflow-hidden"  >
       <div className="container mx-auto flex justify-between items-center py-3">
         {/* Logo */}
         <div>

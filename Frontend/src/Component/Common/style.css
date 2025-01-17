@@ -1,0 +1,10 @@
+html, body {
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+    overflow-y: auto; /* Prevent vertical scrolling */
+    height: 100vh;      /* Set height to the viewport */
+    display: flex;
+    flex-direction: column;
+  }
+  
