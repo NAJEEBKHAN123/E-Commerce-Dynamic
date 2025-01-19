@@ -5,25 +5,35 @@ const User = require('../models/userMode.js')
 // Verify User Middleware
 const verifyUser = async (req, res, next) => {
   try {
-    console.log('Authorization Header:', req.headers.authorization);
+    const authHeader = req.headers.authorization;
 
-    if (!req.headers.authorization) {
-      return res.status(401).json({ success: false, message: 'No token provided' });
+    if (!authHeader || !authHeader.startsWith('Bearer ')) {
+      return res.status(401).json({ success: false, message: 'No token provided or invalid format' });
     }
 
-    const token = req.headers.authorization.split(' ')[1];
-    console.log('Extracted Token:', token);
+    const token = authHeader.split(' ')[1];
 
+    // Decode the token and set the userId in the request
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
-    console.log('Decoded Token:', decoded);
 
     req.userId = decoded.id;
+
+    // Log the userId to verify it's being set
+    console.log('User ID in verifyUser:', req.userId);
+
     next();
   } catch (error) {
-    console.error('Error in verifyUser:', error.message);
-    return res.status(403).json({ success: false, message: error.message });
+    console.error('Token verification error:', error.message);
+
+    const message =
+      error.name === 'TokenExpiredError'
+        ? 'Token has expired'
+        : 'Invalid or expired token';
+
+    return res.status(403).json({ success: false, message });
   }
 };
+
 
 const verifyAdmin = async (req, res, next) => {
   try {

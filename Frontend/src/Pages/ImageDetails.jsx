@@ -1,9 +1,12 @@
 import React from "react";
 import { useLocation, useNavigate } from "react-router-dom";
+import { addItemToCart } from "../Redux/Slice/cartSlice";
+import { useDispatch } from "react-redux";
 
 const ImageDetails = () => {
   const location = useLocation();
   const navigate = useNavigate();
+  const dispatch = useDispatch()
   const image = location.state;
 
   if (!image) {
@@ -17,13 +20,11 @@ const ImageDetails = () => {
   }
 
   const handleAddToCart = () => {
-    alert("Added to cart!");
-    // Add your cart logic here
+    dispatch(addItemToCart(image))
   };
 
   const handleShopNow = () => {
-    alert("Redirecting to shop...");
-    // Add your shop logic here
+   navigate('/products')
   };
 
   return (

@@ -2,16 +2,19 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { logout } from '../../Redux/Slice/authSlice';
+import { clearCart } from '../../Redux/Slice/cartSlice'; // Import clearCart action
 import Logo from '../../assets/Logo.webp';
-import './style.css'
+import './style.css';
 
 const Navbar = () => {
   const { isAuthenticated, role } = useSelector((state) => state.auth);
+  const cartItems = useSelector((state) => state.cart.items); // Access cart items from Redux
   const dispatch = useDispatch();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const handleLogout = () => {
     dispatch(logout());
+    dispatch(clearCart()); // Clear the cart on logout
   };
 
   const toggleMenu = () => {
@@ -19,7 +22,7 @@ const Navbar = () => {
   };
 
   return (
-    <nav className="bg-gray-800 text-white shadow-md sticky top-0 z-50 overflow-hidden"  >
+    <nav className="bg-gray-800 text-white shadow-md sticky top-0 z-50 overflow-hidden">
       <div className="container mx-auto flex justify-between items-center py-3">
         {/* Logo */}
         <div>
@@ -85,7 +88,10 @@ const Navbar = () => {
             </>
           )}
           <Link to="/cart" className="hover:text-yellow-400 transition">
-            Cart <span className="bg-red-600 text-white px-2 py-1 rounded-full text-xs">0</span>
+            Cart 
+            <span className="bg-red-600 text-white px-2 py-1 rounded-full text-xs">
+              {cartItems.length} {/* Display the number of items in the cart */}
+            </span>
           </Link>
         </div>
       </div>
@@ -140,7 +146,10 @@ const Navbar = () => {
               </>
             )}
             <Link to="/cart" className="block hover:text-yellow-400 transition">
-              Cart <span className="bg-red-600 text-white px-2 py-1 rounded-full text-xs">0</span>
+              Cart 
+              <span className="bg-red-600 text-white px-2 py-1 rounded-full text-xs">
+                {cartItems.length}
+              </span>
             </Link>
           </div>
         </div>

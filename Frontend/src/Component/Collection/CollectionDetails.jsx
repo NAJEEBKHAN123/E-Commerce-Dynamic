@@ -1,24 +1,32 @@
 import React from "react";
 import { useLocation, useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { addItemToCart } from "../../Redux/Slice/cartSlice"; // Import the action
 
 function CollectionDetails() {
   const location = useLocation();
   const navigate = useNavigate();
+  const dispatch = useDispatch(); // Initialize dispatch
   const product = location.state;
 
   if (!product) {
     return (
       <div className="flex items-center justify-center h-screen">
         <h2 className="text-xl font-bold text-gray-700">
-          No image details found
+          No product details found
         </h2>
       </div>
     );
   }
 
-  const handleAddToCart = () => {};
+  // Handle adding the product to the cart
+  const handleAddToCart = () => {
+    dispatch(addItemToCart(product)); // Dispatch the action with the product as payload
+  };
 
-  const handleShopNow = () => {};
+  const handleShopNow = () => {
+    navigate("/products"); // Navigate to the products page or wherever you want
+  };
 
   return (
     <div className="flex flex-wrap gap-8 py-10 px-4">
@@ -26,7 +34,7 @@ function CollectionDetails() {
         <img
           src={product.url}
           alt="Product"
-          className="h-80 object-cover"
+          className=" h-80 object-cover"
           style={{ width: "500px" }}
         />
       </div>
@@ -59,7 +67,7 @@ function CollectionDetails() {
         </div>
         <div className="pt-6">
           <button
-            onClick={() => navigate(-1)}
+            onClick={() => navigate('/')}
             className="bg-gray-300 hover:bg-gray-400 text-gray-700 py-3 px-12 rounded-lg shadow-md transition duration-200"
           >
             Back

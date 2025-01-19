@@ -16,6 +16,7 @@ import NotFound from './Pages/NotFound';
 import ProductForm from './Component/Products/ProductForm';
 import ImageDetails from './Pages/ImageDetails';
 import CollectionDetails from './Component/Collection/CollectionDetails';
+import Cart from './Component/Cart/Cart';
 
 const App = () => {
   return (
@@ -35,6 +36,8 @@ const App = () => {
           <Route path="/product/:id" element={<ProductDetails />} />
           <Route path="/image-details/:imageId" element={<ImageDetails />} />
           <Route path="/collection/:imageId" element={<CollectionDetails />} />
+          <Route path="/cart" element={<Cart />} />
+
 
 
           {/* Protected Routes */}
