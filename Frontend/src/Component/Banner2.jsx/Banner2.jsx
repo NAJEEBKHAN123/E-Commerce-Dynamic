@@ -10,7 +10,7 @@ function Banner2() {
 
   return (
     <div className="bg-gray-100">
-      <div className="pb-10 text-4xl font-bold text-center">
+      <div className="pb-10 text-4xl  font-bold text-center">
         <h1>Exclusive Offers on Mobiles, Laptops, and Watches!</h1>
       </div>
       <div className="relative group">

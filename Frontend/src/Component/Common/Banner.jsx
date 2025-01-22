@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import  { useState, useEffect } from 'react';
 
 function Banner() {
   const images = [
@@ -39,18 +39,18 @@ function Banner() {
         <p className="text-lg md:text-xl mb-6">
           Explore top deals on mobiles, laptops and watches!
         </p>
-        <div className="space-x-4">
+        <div className=" flex justify-center items-center flex-wrap gap-2 ">
           <a
             href="/products"
-            className="px-6 py-3 bg-yellow-500 text-black font-semibold rounded-lg hover:bg-yellow-600 transition"
+            className="px-6 py-3  bg-yellow-500 text-black font-semibold rounded-lg hover:bg-yellow-600 transition"
           >
             Shop Now
           </a>
           <a
             href="/about"
-            className="px-6 py-3 bg-gray-800 border border-yellow-500 text-yellow-500 font-semibold rounded-lg hover:bg-yellow-500 hover:text-black transition"
+            className="px-6 py-3  bg-gray-800 border border-yellow-500 text-yellow-500 font-semibold rounded-lg hover:bg-yellow-500 hover:text-black transition"
           >
-            Learn More
+            Learn More 
           </a>
         </div>
       </div>

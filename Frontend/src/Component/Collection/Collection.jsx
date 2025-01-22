@@ -130,7 +130,7 @@ function Collection() {
             <img
               src={hoveredId === product.id ? product.hoverUrl : product.url}
               alt={product.desc}
-              className="w-full h-48 object-cover sm:rounded-md"
+              className="w-full h-48  object-cover sm:rounded-md"
             />
             <h1 className="text-2xl font-bold">{product.name}</h1>
             <h1>Price: {product.price} $</h1>
