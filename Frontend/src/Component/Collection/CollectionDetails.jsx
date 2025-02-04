@@ -34,8 +34,8 @@ function CollectionDetails() {
         <img
           src={product.url}
           alt="Product"
-          className=" h-80 object-cover"
-          style={{ width: "500px" }}
+          className="w-[500px] h-80 object-cover"
+          
         />
       </div>
       <div>
@@ -47,7 +47,7 @@ function CollectionDetails() {
           Price: ${product.price}
         </h1>
         <h2 className="text-lg text-gray-700 mb-4">
-          Quantity: {product.quantity || "Not available"}{" "}
+          Quantity: {product.quantity || "Not available"}k
           {/* Fallback for missing quantity */}
         </h2>
 

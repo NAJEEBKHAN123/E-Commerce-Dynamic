@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { logout } from "../../Redux/Slice/authSlice";
-import { clearCart } from "../../Redux/Slice/cartSlice"; // Import clearCart action
+import { clearCart } from "../../Redux/Slice/cartSlice";
 import Logo from "../../assets/Logo.webp";
 import "./style.css";
 import Modal from "../Cart/Model";
@@ -10,10 +10,10 @@ import Cart from "../Cart/Cart";
 
 const Navbar = () => {
   const { isAuthenticated, role } = useSelector((state) => state.auth);
-  const cartItems = useSelector((state) => state.cart.items); // Access cart items from Redux
+  const cartItems = useSelector((state) => state.cart.items);
   const dispatch = useDispatch();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [isCartOpen, setIsCartOpen] = useState(false); // Separate state for the cart modal
+  const [isCartOpen, setIsCartOpen] = useState(false);
 
   const handleLogout = () => {
     dispatch(logout());
@@ -38,15 +38,13 @@ const Navbar = () => {
               <img
                 src={Logo}
                 alt="E-Shop Logo"
-                className="w-12 h-12 rounded-full"
+                className="w-12 h-12 rounded-full md:h-12 md:w-12 sm:h-8 sm:w-8 logo"
               />
             </Link>
           </div>
 
           {/* Desktop Menu Links */}
-          <div
-            className={`hidden lg:flex space-x-6 pl-24 ${isMenuOpen ? "hidden" : "flex"}`}
-          >
+          <div className="hidden lg:flex space-x-6 pl-24">
             <Link to="/" className="hover:text-yellow-400 transition">
               Home
             </Link>
@@ -62,12 +60,19 @@ const Navbar = () => {
             <Link to="/contact" className="hover:text-yellow-400 transition">
               Contact Us
             </Link>
+            {isAuthenticated && role === "admin" && (
+              <Link to="/admin-dashboard" className="hover:text-yellow-400 transition">
+                Admin Panel
+              </Link>
+            )}
           </div>
 
           {/* Mobile Menu Button */}
           <button
             onClick={toggleMenu}
             className="text-2xl lg:hidden focus:outline-none"
+            aria-expanded={isMenuOpen}
+            aria-label="Toggle navigation menu"
           >
             ☰
           </button>
@@ -82,14 +87,14 @@ const Navbar = () => {
             {/* Login/Logout Link */}
             {!isAuthenticated ? (
               <Link to="/login" className="hover:text-yellow-400 transition flex items-center">
-             <i className="fas fa-user-plus text-xl mr-1" /> 
+                <i className="fas fa-user-plus text-xl mr-1" />
               </Link>
             ) : (
               <button
                 onClick={handleLogout}
                 className="hover:text-yellow-400 transition flex items-center"
               >
-                <i className="fas fa-sign-out-alt text-xl mr-1" /> Logout
+                <i className="fas fa-sign-out-alt text-xl mr-1" />
               </button>
             )}
 
@@ -97,9 +102,10 @@ const Navbar = () => {
             <button
               onClick={toggleCart}
               className="relative hover:text-yellow-400 transition flex items-center"
+              aria-label="View cart"
             >
               <i className="fas fa-shopping-cart text-xl mr-1" />
-              <span className="absolute top-0 right-0 z-10 px-1  bg-red-600 text-white  rounded-full text-xs">
+              <span className="absolute top-0 right-0 z-10 px-1 bg-red-600 text-white rounded-full text-xs transform -translate-x-1/2 -translate-y-1/2">
                 {cartItems.length}
               </span>
             </button>
@@ -108,42 +114,51 @@ const Navbar = () => {
 
         {/* Mobile Dropdown Menu */}
         {isMenuOpen && (
-          <div className="absolute top-18 right-0 z-20 lg:hidden bg-gray-700 py-4 w-32 text-center rounded-md px-6 items-center space-y-4">
+          <div className="absolute top-18 left-0 z-20 lg:hidden bg-gray-700 py-4 w-32 text-center rounded-md px-6 items-center space-y-4">
             <Link
               to="/"
               className="block hover:text-yellow-400 transition"
-              onClick={() => setIsMenuOpen(false)} // Close menu when clicked
+              onClick={() => setIsMenuOpen(false)}
             >
               Home
             </Link>
             <Link
               to="/products"
               className="block hover:text-yellow-400 transition"
-              onClick={() => setIsMenuOpen(false)} // Close menu when clicked
+              onClick={() => setIsMenuOpen(false)}
             >
               Shop
             </Link>
             <Link
               to="/blogs"
               className="block hover:text-yellow-400 transition"
-              onClick={() => setIsMenuOpen(false)} // Close menu when clicked
+              onClick={() => setIsMenuOpen(false)}
             >
               Blogs
             </Link>
             <Link
               to="/about"
               className="block hover:text-yellow-400 transition"
-              onClick={() => setIsMenuOpen(false)} // Close menu when clicked
+              onClick={() => setIsMenuOpen(false)}
             >
               About Us
             </Link>
             <Link
               to="/contact"
               className="block hover:text-yellow-400 transition"
-              onClick={() => setIsMenuOpen(false)} // Close menu when clicked
+              onClick={() => setIsMenuOpen(false)}
             >
               Contact Us
             </Link>
+            {isAuthenticated && role === "admin" && (
+              <Link
+                to="/admin-dashboard"
+                className="block hover:text-yellow-400 transition"
+                onClick={() => setIsMenuOpen(false)}
+              >
+                Admin Panel
+              </Link>
+            )}
           </div>
         )}
       </nav>

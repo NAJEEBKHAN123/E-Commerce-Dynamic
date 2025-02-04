@@ -3,7 +3,7 @@ import '@fortawesome/fontawesome-free/css/all.min.css';
 
 function Footer() {
   return (
-    <footer className="bg-gray-900 text-white py-12 m-0 ">
+    <footer className="bg-gray-900 text-white py-12 mb-[-30px] ">
       <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-8 px-6">
         {/* About Section */}
         <div>

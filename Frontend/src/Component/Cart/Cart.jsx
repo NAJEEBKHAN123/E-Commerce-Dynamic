@@ -29,17 +29,17 @@ const Cart = () => {
   console.log(cartItems.image)
 
   return (
-    <div className="container mx-auto py-6">
-      <h2 className="mb-5 text-center ">Your cart is empty. </h2>
+    <div className="container mx-auto py-6 ">
+      <h2 className="mb-5 text-center mt-10">Your cart is empty. </h2>
 
       {/* Cart Items */}
       {cartItems.length === 0 ? (
-        <p className='text-center'><Link to="/products" className="bg-blue-700 px-10 py-3 text-2xl text-white hover:bg-blue-500">Start shopping</Link></p>
+        <p className='text-center'><Link to="/products" className="bg-blue-700 px-10 py-3 text-2xl text-white hover:bg-blue-500 rounded-lg">Start shopping</Link></p>
       ) : (
         <div>
-          <div className="flex flex-col space-y-4">
+          <div className="flex flex-col space-y-4 overflow-auto scroll-m-2 ">
             {cartItems.map((item) => (
-              <div key={item.id} className="flex justify-between items-center bg-gray-100 p-4 rounded-md">
+              <div key={item.id} className="flex justify-between items-center bg-gray-100 p-4 rounded-md overflow-scroll">
                 <div className="flex items-center space-x-4">
                   <img  src={item.image || 'https://media.istockphoto.com/id/2167432886/photo/summertime-vacation-asian-female-traveller-young-adult-asian-woman-with-shopping-bags-at.webp?a=1&b=1&s=612x612&w=0&k=20&c=6sX2W5p_zCLKigYSrq4vFUA8gHPFDGw6wzc11EoFHwo='} alt={item.name} className="w-16 h-16 object-cover" />
                   <div>

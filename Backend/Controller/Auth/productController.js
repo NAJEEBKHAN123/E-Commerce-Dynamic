@@ -1,18 +1,35 @@
 const Product = require("../../models/productSchema");
+const path = require("path");
 
 // Create Product
+
+
 const createProduct = async (req, res) => {
   try {
-    const newProduct = new Product({ ...req.body, createdBy: req.userId });
-    await newProduct.save();
-    console.log("Product Created:", newProduct);
+    const { title, description, price, brand } = req.body;
 
+    if (!req.file) {
+      return res.status(400).json({ success: false, message: "Image is required" });
+    }
+
+    const imagePath = `/uploads/${req.file.filename}`; // Store relative path
+
+    const newProduct = new Product({
+      title,
+      description,
+      price,
+      brand,
+      image: imagePath,
+    });
+
+    await newProduct.save();
     res.status(201).json({ success: true, product: newProduct });
   } catch (error) {
     console.error("Error in createProduct:", error.message);
     res.status(500).json({ success: false, message: error.message });
   }
 };
+
 
 // Get All Products
 const getAllProduct = async (req, res) => {

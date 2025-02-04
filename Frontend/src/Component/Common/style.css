@@ -21,3 +21,10 @@ html, body {
       padding-right: 20px;
     }    
   }
+
+  @media screen and (min-width: 200px ) and (max-width: 1024){
+    .logo{
+      height: 8;
+      width: 8;
+    }    
+  }

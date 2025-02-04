@@ -1,19 +1,26 @@
-import { useNavigate, useParams } from 'react-router-dom';
-import { useState, useEffect } from 'react';
-import { createNewProduct, updateExistingProduct, fetchProductById } from '../../Redux/Service/apiService';
+import React, { useState, useEffect } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import {
+  createNewProduct,
+  updateExistingProduct,
+  fetchProductById,
+} from "../../Redux/Service/apiService";
 
 const ProductForm = () => {
   const { id } = useParams();
   const navigate = useNavigate();
+
   const [formData, setFormData] = useState({
-    title: '',
-    description: '',
-    price: '',
-    brand: '',
-    images: [],
+    title: "",
+    description: "",
+    price: "",
+    brand: "",
+    images: [], // Store images
   });
+
+  const [imageFile, setImageFile] = useState(null);
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState('');
+  const [error, setError] = useState("");
 
   useEffect(() => {
     if (id) {
@@ -21,9 +28,15 @@ const ProductForm = () => {
         setLoading(true);
         try {
           const product = await fetchProductById(id);
-          setFormData(product);
-        } catch (error) {
-          setError('Error fetching product.');
+          setFormData({
+            title: product.title,
+            description: product.description,
+            price: product.price,
+            brand: product.brand,
+            images: product.images || [], // Handle existing images
+          });
+        } catch (err) {
+          setError("Error fetching product.");
         } finally {
           setLoading(false);
         }
@@ -32,20 +45,31 @@ const ProductForm = () => {
     }
   }, [id]);
 
+  const handleFileChange = (e) => {
+    setImageFile(e.target.files[0]);
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
-    setError('');
-  
+    setError("");
+
     try {
+      const data = new FormData();
+      data.append("title", formData.title);
+      data.append("description", formData.description);
+      data.append("price", formData.price);
+      data.append("brand", formData.brand);
+      if (imageFile) data.append("image", imageFile); // Add image file
+
       if (id) {
-        await updateExistingProduct(id, formData);
+        await updateExistingProduct(id, data); // Update product
       } else {
-        await createNewProduct(formData);
+        await createNewProduct(data); // Create new product
       }
-      navigate('/products');
-    } catch (error) {
-      setError('Error saving product.');
+      navigate("/products");
+    } catch (err) {
+      setError("Error saving product.");
     } finally {
       setLoading(false);
     }
@@ -53,56 +77,55 @@ const ProductForm = () => {
 
   return (
     <form onSubmit={handleSubmit}>
-      <div>
-        <label>Title:</label>
-        <input
-          type="text"
-          value={formData.title}
-          onChange={(e) => setFormData({ ...formData, title: e.target.value })}
-          required
-        />
-      </div>
-      <div>
-        <label>Description:</label>
-        <textarea
-          value={formData.description}
-          onChange={(e) => setFormData({ ...formData, description: e.target.value })}
-        />
-      </div>
-      <div>
-        <label>Price:</label>
-        <input
-          type="number"
-          value={formData.price}
-          onChange={(e) => setFormData({ ...formData, price: e.target.value })}
-          required
-        />
-      </div>
-      <div>
-        <label>Brand:</label>
-        <input
-          type="text"
-          value={formData.brand}
-          onChange={(e) => setFormData({ ...formData, brand: e.target.value })}
-        />
-      </div>
-      <div>
-        <label>Images:</label>
-        <input
-          type="text"
-          placeholder="Image URLs (comma-separated)"
-          value={formData.images.join(',')}
-          onChange={(e) =>
-            setFormData({ ...formData, images: e.target.value.split(',') })
-          }
-        />
-      </div>
-      {loading ? (
-        <button type="button" disabled>Loading...</button>
-      ) : (
-        <button type="submit">{id ? 'Update Product' : 'Add Product'}</button>
+      <input
+        type="text"
+        placeholder="Title"
+        value={formData.title}
+        onChange={(e) => setFormData({ ...formData, title: e.target.value })}
+        required
+      />
+      <textarea
+        placeholder="Description"
+        value={formData.description}
+        onChange={(e) => setFormData({ ...formData, description: e.target.value })}
+      />
+      <input
+        type="number"
+        placeholder="Price"
+        value={formData.price}
+        onChange={(e) => setFormData({ ...formData, price: e.target.value })}
+        required
+      />
+      <input
+        type="text"
+        placeholder="Brand"
+        value={formData.brand}
+        onChange={(e) => setFormData({ ...formData, brand: e.target.value })}
+        required
+      />
+      <input type="file" onChange={handleFileChange} />
+      <button type="submit" disabled={loading}>
+        {loading ? "Loading..." : id ? "Update Product" : "Add Product"}
+      </button>
+      {error && <p style={{ color: "red" }}>{error}</p>}
+
+      {/* Display uploaded images */}
+      {formData.images.length > 0 && (
+        <div>
+          <h3>Uploaded Images:</h3>
+          <div style={{ display: "flex", gap: "10px" }}>
+            {formData.images.map((image, index) => (
+              <div key={index}>
+                <img
+                  src={`http://localhost:5000${image.url }`} // Adjust base URL as needed
+                  alt={image.altText || "Uploaded image"}
+                  style={{ width: "100px", height: "100px", objectFit: "cover" }}
+                />
+              </div>
+            ))}
+          </div>
+        </div>
       )}
-      {error && <p style={{ color: 'red' }}>{error}</p>}
     </form>
   );
 };

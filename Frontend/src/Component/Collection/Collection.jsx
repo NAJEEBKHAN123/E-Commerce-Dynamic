@@ -118,7 +118,7 @@ function Collection() {
         </p>
         <h1 className="text-4xl font-bold pt-4">Collection</h1>
       </div>
-      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 px-4 md:px-16 p-12">
+      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 gap-y-10 px-4 md:px-16 p-12">
         {products.map((product) => (
           <div
             key={product.id}

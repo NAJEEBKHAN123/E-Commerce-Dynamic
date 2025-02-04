@@ -17,6 +17,8 @@ import ProductForm from './Component/Products/ProductForm';
 import ImageDetails from './Pages/ImageDetails';
 import CollectionDetails from './Component/Collection/CollectionDetails';
 import Cart from './Component/Cart/Cart';
+import Blogs from './Component/Blog/Blogs';
+import QuickView from './Component/Products/QuickView';
 
 const App = () => {
   return (
@@ -37,9 +39,10 @@ const App = () => {
           <Route path="/image-details/:imageId" element={<ImageDetails />} />
           <Route path="/collection/:imageId" element={<CollectionDetails />} />
           <Route path="/cart" element={<Cart />} />
+          <Route path="/blogs" element={<Blogs />} />
+          <Route path="/quickview/:id" element={<QuickView />} />
 
-
-
+          
           {/* Protected Routes */}
           <Route
             path="/user-dashboard"

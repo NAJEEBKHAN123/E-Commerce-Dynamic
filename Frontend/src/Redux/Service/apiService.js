@@ -30,6 +30,7 @@ export const createNewProduct = async (productData) => {
   const response = await axios.post(`${API_URL}/new_Product`, productData, {
     headers: {
       Authorization: `Bearer ${token}`,
+      'Content-Type': 'multipart/form-data', // Ensure the correct content type for file uploads
     },
   });
   return response.data;
@@ -40,6 +41,7 @@ export const updateExistingProduct = async (id, productData) => {
   const response = await axios.put(`${API_URL}/updateProduct/${id}`, productData, {
     headers: {
       Authorization: `Bearer ${token}`,
+      'Content-Type': 'multipart/form-data', // Ensure the correct content type for file uploads
     },
   });
   return response.data;

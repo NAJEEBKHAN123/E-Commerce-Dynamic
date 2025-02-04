@@ -1,0 +1,23 @@
+
+
+@media screen and (max-width : 357px){
+    .productList{
+        grid-template-columns: 1fr;
+    }
+} 
+
+@media screen and (min-width: 357px) and (max-width: 457px) {
+    .image {
+        width: 100%; /* Set width as a percentage of the container */
+        height: 80%;
+        aspect-ratio: 1 / 1; /* Ensures the height matches the width */
+        object-fit: cover; /* Ensures the image content fits well in the square */
+    }
+   
+}
+/*   */
+
+
+
+
+
